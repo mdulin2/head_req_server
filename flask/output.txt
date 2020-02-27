@@ -1,0 +1,39 @@
+# Results from the login-unsafe call from the server side 
+GET LOGIN
+127.0.0.1 - - [13/Dec/2019 10:32:22] "GET /login-unsafe HTTP/1.1" 200 -
+POST LOGIN
+127.0.0.1 - - [13/Dec/2019 10:32:22] "POST /login-unsafe HTTP/1.1" 200 -
+127.0.0.1 - - [13/Dec/2019 10:32:22] "PUT /login-unsafe HTTP/1.1" 405 -
+127.0.0.1 - - [13/Dec/2019 10:32:22] "PATCH /login-unsafe HTTP/1.1" 405 -
+POST LOGIN
+127.0.0.1 - - [13/Dec/2019 10:32:22] "HEAD /login-unsafe HTTP/1.1" 200 -
+127.0.0.1 - - [13/Dec/2019 10:32:22] "DELETE /login-unsafe HTTP/1.1" 405 -
+127.0.0.1 - - [13/Dec/2019 10:32:22] "OPTIONS /login-unsafe HTTP/1.1" 200 -
+127.0.0.1 - - [13/Dec/2019 10:32:22] "TRACE /login-unsafe HTTP/1.1" 405 -
+127.0.0.1 - - [13/Dec/2019 10:32:22] "CONNECT /login-unsafe HTTP/1.1" 405 -
+127.0.0.1 - - [13/Dec/2019 10:32:22] "?? /login-unsafe HTTP/1.1" 405 -
+
+
+# Results from the login-unsafe call from the tester script... 
+GET result... GET LOGIN
+POST result... POST LOGIN
+PUT result... <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+PATCH result... <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+HEAD result... 
+DELETE result... <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<title>405 Method Not Allowed</title>
+<h1>Method Not Allowed</h1>
+<p>The method is not allowed for the requested URL.</p>
+
+OPTION result... 
+CompletedProcess(args=['curl', '-v', '-X', 'TRACE', 'http://127.0.0.1:5000/login-unsafe'], returncode=0, stdout=b'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not allowed for the requested URL.</p>\n')
+CompletedProcess(args=['curl', '-v', '-X', 'CONNECT', 'http://127.0.0.1:5000/login-unsafe'], returncode=0, stdout=b'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not allowed for the requested URL.</p>\n')
+CompletedProcess(args=['curl', '-v', '-X', '??', 'http://127.0.0.1:5000/login-unsafe'], returncode=0, stdout=b'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">\n<title>405 Method Not Allowed</title>\n<h1>Method Not Allowed</h1>\n<p>The method is not allowed for the requested URL.</p>\n')

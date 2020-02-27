@@ -1,0 +1,27 @@
+## From webserver... 
+
+[13/Dec/2019 00:24:55] "CONNECT /first HTTP/1.1" 405 0
+GET....
+[13/Dec/2019 00:25:30] "GET /first HTTP/1.1" 200 4
+POST....
+[13/Dec/2019 00:25:30] "POST /first HTTP/1.1" 200 5
+put....
+[13/Dec/2019 00:25:30] "PUT /first HTTP/1.1" 200 4
+patch....
+[13/Dec/2019 00:25:30] "PATCH /first HTTP/1.1" 200 6
+HEAD....
+[13/Dec/2019 00:25:30] "HEAD /first HTTP/1.1" 200 5
+Method Not Allowed (DELETE): /first
+Method Not Allowed: /first
+[13/Dec/2019 00:25:30] "DELETE /first HTTP/1.1" 405 0
+[13/Dec/2019 00:25:30] "OPTIONS /first HTTP/1.1" 200 0
+trace....
+[13/Dec/2019 00:25:30] "TRACE /first HTTP/1.1" 200 6
+Method Not Allowed (CONNECT): /first
+Method Not Allowed: /first
+[13/Dec/2019 00:25:30] "CONNECT /first HTTP/1.1" 405 0
+
+
+
+
+

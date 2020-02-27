@@ -1,0 +1,32 @@
+GET result... GET!
+POST result... Post!
+PUT result... put!
+PATCH result... patch!
+HEAD result... 
+DELETE result... delete!
+OPTION result... options!
+CompletedProcess(args=['curl', '-v', '-X', 'TRACE', 'http://127.0.0.1:8000/first'], returncode=0, stdout=b'trace!')
+CompletedProcess(args=['curl', '-v', '-X', 'CONNECT', 'http://127.0.0.1:8000/first'], returncode=0, stdout=b'')
+
+
+## Notice that the HEAD request maps to GET, even though this is not a GET request. The connect (even when it is defined) does not work. 
+
+GET....
+[13/Dec/2019 00:28:28] "GET /first HTTP/1.1" 200 4
+POST....
+[13/Dec/2019 00:28:28] "POST /first HTTP/1.1" 200 5
+put....
+[13/Dec/2019 00:28:28] "PUT /first HTTP/1.1" 200 4
+patch....
+[13/Dec/2019 00:28:28] "PATCH /first HTTP/1.1" 200 6
+GET....
+[13/Dec/2019 00:28:28] "HEAD /first HTTP/1.1" 200 4
+delete....
+[13/Dec/2019 00:28:28] "DELETE /first HTTP/1.1" 200 7
+options....
+[13/Dec/2019 00:28:28] "OPTIONS /first HTTP/1.1" 200 8
+trace....
+[13/Dec/2019 00:28:28] "TRACE /first HTTP/1.1" 200 6
+Method Not Allowed (CONNECT): /first
+Method Not Allowed: /first
+[13/Dec/2019 00:28:28] 
