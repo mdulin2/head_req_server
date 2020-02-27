@@ -41,7 +41,7 @@ def request_sender(url):
 
 # request_sender("http://127.0.0.1:8000/") # For Django 
 # request_sender("http://127.0.0.1:5000/login-unsafe") # For Flask 
-#request_sender("http://127.0.0.1:3000") # For nodejs
+request_sender("http://127.0.0.1:3000") # For nodejs
 #request_sender("http://127.0.0.1:9000") # For Spring
-
-request_sender("https://127.0.0.1:5001/weatherforecast") # For asp.net
+#request_sender("https://127.0.0.1:5001/weatherforecast") # For asp.net
+#request_sender("http://127.0.0.1:8000/") # For laravel 

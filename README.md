@@ -40,6 +40,10 @@ So, we will be testing the following requests types:
 - ASP.net: 
   - Use visual studio (free edition works fine) 
   - The web server runs on https://127.0.0.1:5001/weatherforecast by default. 
+- Laravel 
+  - Install using Composer 
+  - Use PHP 7.2 or greater for this application
+  - Run `php artisan serv` to turn on the API.
 
 ## Targets 
 - ~~Django~~
@@ -47,31 +51,39 @@ So, we will be testing the following requests types:
 - Ruby on Rails 
 - ~~Express~~
 - ~~Springboot~~
-- ASP.net
-- Laravel
+- ~~ASP.net~~
+- ~~Laravel~~
 
 ## Findings 
 - The real bypass for these types of attacks is finding a request that bypasses the CSRF checks (HEAD, OPTIONS and GET do not require these in lots of frameworks) to perform state changing actions. It appears that a simple check for GET then the else statement is not enough. 
 
 ## Knowledge/Tested
 - Ruby on Rails: 
-  - Maps HEAD to GET automatically (https://blog.teddykatz.com/2019/11/05/github-oauth-bypass.html): 
+  - Maps HEAD to GET automatically (https://blog.teddykatz.com/2019/11/05/github-oauth-bypass.html) 
 - Flask:  
   - Maps HEAD to GET automatically (https://stackoverflow.com/questions/22443245/why-does-apache-wsgi-map-head-to-get-how-to-speed-up-head-in-flask). 
-  - Does not specify which request type must be used. So, because HEAD is mapped to GET, this may be vulnerable. 
+  - Does not specify which request type must be used. So, because HEAD is mapped to GET, this is vulnerable. 
 - Django: 
   - Maps HEAD to GET with class based views (if HEAD is not implemented). 
   - With the normal usage, if a decorator is explicitly set to use GET or POST, the HEAD request will not work. However, if no request type is specificed, then the HEAD will work as a GET request. 
+  - This is vulnerable in lots of configurations
   - View the Django below for more information. 
 - Express: 
   - Each request type has to be explicitly stated. 
-  - app.all may also be used for this. 
+  - app.all may also be used for this. Vulnerable in this configuration.
 - Springboot:
-  - Each request type has to be explicitly stated. 
+  - Each request type has to be explicitly stated, but an API can accept multiple. 
+  - Maps HEAD to GET requests. 
+  - This is vulnerable in certain configurations. 
 - ASP.NET: 
   - No implicit request assumptions! But even HEAD requests are mapped to GET. All of these have to be specifically stated. 
+- Laravel 
+  - Makes the implicit assumption of HEAD requests to GET requests.
+  - The ANY request type is vulnerable to these types of attacks. 
 - Overall: 
-  - Ruby on Rails, Django (in some configures) and Flask are vulnerable to this issue. 
+  - Ruby on Rails, Django (in some normal configurations) and Flask are vulnerable to this issue. 
+  - Express, Laravel and Springboot are potentially vulnerable if a specific setup for the API is used. 
+  - ASP.NET does a great job protectioning against this issue! :) So, it is not vulnerable. 
 
 ## Tested Content Servers 
 ### Django: 
@@ -114,12 +126,22 @@ So, we will be testing the following requests types:
   - Connect does not work by default with this setup (uses Apache Tomcat) 
   - CSRF protection has to be explicitly turned on with Springboot.
   - Because the REST is used, this server is not vulnerable to attacks of the implicit assumptions.
+  - A single route can use **multiple** HTTP methods. So, using this, a route could be vulnerable to this attack. 
 
 ## ASP.NET 
   - By default, the API package uses a REST based model. 
   - Does not automatically map HEAD to GET. They have to be specifically specified! 
   - Only web server to use HTTPS on the local system, by default. 
   - The dynamic route mapping for ASP.NET should not matter because HEAD requests are not even mapped to GET requests. 
+  - Can use the **AcceptVerbs** function. But, these need to be explicitly stated in order to use these methods. 
+
+## Laravel 
+  - Has built in CSRF protection on requests that are not GET requests? 
+  - Uses a REST based model. So, all of the requests methods are separate 
+  - HEAD requests are mapped to GET requests, by default. 
+  - However, there is still an 'any' route that can (and does get used) at times. 
+    - The any route is vulnerable to this implicit assumption attack, as demonstrated in the demo code. 
+  - The main source code is in /routes/web.php
 
 
 

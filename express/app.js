@@ -15,12 +15,19 @@ app.get('/', (req, res) =>{
     res.send('Get!');
 });
 
-/*
-app.all('/secret', function (req, res, next) {
-    console.log("Req: " + req.method);
+app.all('/vuln', function (req, res, next) {
+    if(req.method == "GET"){
+        // Do xyz
+    }
+
+    // Implicit assumption about the POST request being used after a CSRF token check...
+    // A head request would hit this point (depending on the configurations of the CSRF protections on the site)
+    else{
+        console.log("Potentially vulnerable! Req: " + req.method);
+    }
+
     res.send('All!')
 });
-*/
 
 
 // If only the post request, then ONLY post is allowed. 
