@@ -1,0 +1,17 @@
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/bin/Debug/netcoreapp3.1/appsettings.Development.json
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/bin/Debug/netcoreapp3.1/appsettings.json
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/bin/Debug/netcoreapp3.1/HeadReq.deps.json
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/bin/Debug/netcoreapp3.1/HeadReq.runtimeconfig.json
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/bin/Debug/netcoreapp3.1/HeadReq.runtimeconfig.dev.json
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/bin/Debug/netcoreapp3.1/HeadReq.dll
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/bin/Debug/netcoreapp3.1/HeadReq.pdb
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/obj/Debug/netcoreapp3.1/HeadReq.csprojAssemblyReference.cache
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/obj/Debug/netcoreapp3.1/HeadReq.MvcApplicationPartsAssemblyInfo.cache
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/obj/Debug/netcoreapp3.1/HeadReq.AssemblyInfoInputs.cache
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/obj/Debug/netcoreapp3.1/HeadReq.AssemblyInfo.cs
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/obj/Debug/netcoreapp3.1/HeadReq.RazorTargetAssemblyInfo.cache
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/obj/Debug/netcoreapp3.1/staticwebassets/HeadReq.StaticWebAssets.Manifest.cache
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/obj/Debug/netcoreapp3.1/staticwebassets/HeadReq.StaticWebAssets.xml
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/obj/Debug/netcoreapp3.1/HeadReq.dll
+/Users/maxdulin/Documents/Research/head_req/aspdotnet/HeadReq/HeadReq/obj/Debug/netcoreapp3.1/HeadReq.pdb

@@ -21,6 +21,7 @@ So, we will be testing the following requests types:
   - Had to use CURL in order to test this
 - Run the test script: 
   - python3 tester.py (needs to be python3 because of the call to subprocess)
+
 ## Setup 
 - django 
   - Install django dependencies 
@@ -28,21 +29,24 @@ So, we will be testing the following requests types:
 - Flask 
   - Install flask dependencies 
   - python3 main.py
-- express 
+- Express 
   - Install node and expressjs 
   - node app.js
-- Spring: 
+- Springboot: 
+  - This is NOT my project. I borrowed this setup for terms of the demonstration. 
   - https://spring.io/guides/gs/actuator-service/ 
   - ./gradlew clean build -x test && java -jar build/libs/actuator-service-0.0.1-SNAPSHOT.jar in the complete directory 
   - My setup runs on port 9000. This may change for you depending on the setup. 
-
+- ASP.net: 
+  - Use visual studio (free edition works fine) 
+  - The web server runs on https://127.0.0.1:5001/weatherforecast by default. 
 
 ## Targets 
 - ~~Django~~
 - ~~Flask~~ 
 - Ruby on Rails 
 - ~~Express~~
-- ~Springboot~
+- ~~Springboot~~
 - ASP.net
 - Laravel
 
@@ -62,9 +66,10 @@ So, we will be testing the following requests types:
 - Express: 
   - Each request type has to be explicitly stated. 
   - app.all may also be used for this. 
-- Spring:
+- Springboot:
   - Each request type has to be explicitly stated. 
-
+- ASP.NET: 
+  - No implicit request assumptions! But even HEAD requests are mapped to GET. All of these have to be specifically stated. 
 - Overall: 
   - Ruby on Rails, Django (in some configures) and Flask are vulnerable to this issue. 
 
@@ -107,7 +112,14 @@ So, we will be testing the following requests types:
   - Most SpringBoot stuff is going to use MVC on the backend (REST). So, this is what the rest of the testing should probably use. 
   - An invalid HTTP request ('??') causes the server to error out. 
   - Connect does not work by default with this setup (uses Apache Tomcat) 
-  - CSRF protection has to be explicitly turned on with Springboot? 
+  - CSRF protection has to be explicitly turned on with Springboot.
+  - Because the REST is used, this server is not vulnerable to attacks of the implicit assumptions.
+
+## ASP.NET 
+  - By default, the API package uses a REST based model. 
+  - Does not automatically map HEAD to GET. They have to be specifically specified! 
+  - Only web server to use HTTPS on the local system, by default. 
+  - The dynamic route mapping for ASP.NET should not matter because HEAD requests are not even mapped to GET requests. 
 
 
 

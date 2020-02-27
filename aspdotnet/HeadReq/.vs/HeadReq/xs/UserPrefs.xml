@@ -1,0 +1,30 @@
+﻿<Properties StartupConfiguration="{6390364D-FE1A-4B6A-860C-12A2D8F102B8}|Default">
+  <MonoDevelop.Ide.ItemProperties.HeadReq PreferredExecutionTarget="/Applications/Firefox.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="HeadReq/Controllers/WeatherForecastController.cs">
+    <Files>
+      <File FileName="HeadReq/Controllers/WeatherForecastController.cs" Line="74" Column="9" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="HeadReq" expanded="True">
+            <Node name="HeadReq" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="WeatherForecastController.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
