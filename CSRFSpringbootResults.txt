@@ -1,0 +1,20 @@
+## CSRF Result for Springboot from Ken 
+GET result... Hello
+POST result... {"timestamp":"2020-04-30T23:06:11.628+0000","status":403,"error":"Forbidden","message":"Forbidden","path":"/"}
+PUT result... {"timestamp":"2020-04-30T23:06:11.633+0000","status":403,"error":"Forbidden","message":"Forbidden","path":"/"}
+PATCH result... {"timestamp":"2020-04-30T23:06:11.638+0000","status":403,"error":"Forbidden","message":"Forbidden","path":"/"}
+HEAD result...
+DELETE result... {"timestamp":"2020-04-30T23:06:11.648+0000","status":403,"error":"Forbidden","message":"Forbidden","path":"/"}
+OPTION result...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   449  100   449    0     0  40818      0 --:--:-- --:--:-- --:--:-- 40818
+CompletedProcess(args=['curl', '--insecure', '-X', 'TRACE', 'http://127.0.0.1:8080'], returncode=0, stdout=b'<!doctype html><html lang="en"><head><title>HTTP Status 405 \xe2\x80\x93 Method Not Allowed</title><style type="text/css">body {font-family:Tahoma,Arial,sans-serif;} h1, h2, h3, b {color:white;background-color:#525D76;} h1 {font-size:22px;} h2 {font-size:16px;} h3 {font-size:14px;} p {font-size:12px;} a {color:black;} .line {height:1px;background-color:#525D76;border:none;}</style></head><body><h1>HTTP Status 405 \xe2\x80\x93 Method Not Allowed</h1></body></html>')
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   455  100   455    0     0  91000      0 --:--:-- --:--:-- --:--:-- 91000
+CompletedProcess(args=['curl', '--insecure', '-X', 'CONNECT', 'http://127.0.0.1:8080'], returncode=0, stdout=b'<!doctype html><html lang="en"><head><title>HTTP Status 500 \xe2\x80\x93 Internal Server Error</title><style type="text/css">body {font-family:Tahoma,Arial,sans-serif;} h1, h2, h3, b {color:white;background-color:#525D76;} h1 {font-size:22px;} h2 {font-size:16px;} h3 {font-size:14px;} p {font-size:12px;} a {color:black;} .line {height:1px;background-color:#525D76;border:none;}</style></head><body><h1>HTTP Status 500 \xe2\x80\x93 Internal Server Error</h1></body></html>')
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   435  100   435    0     0   212k      0 --:--:-- --:--:-- --:--:--  212k
+CompletedProcess(args=['curl', '--insecure', '-X', '??', 'http://127.0.0.1:8080'], returncode=0, stdout=b'<!doctype html><html lang="en"><head><title>HTTP Status 400 \xe2\x80\x93 Bad Request</title><style type="text/css">body {font-family:Tahoma,Arial,sans-serif;} h1, h2, h3, b {color:white;background-color:#525D76;} h1 {font-size:22px;} h2 {font-size:16px;} h3 {font-size:14px;} p {font-size:12px;} a {color:black;} .line {height:1px;background-color:#525D76;border:none;}</style></head><body><h1>HTTP Status 400 \xe2\x80\x93 Bad Request</h1></body></html>')

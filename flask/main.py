@@ -9,25 +9,24 @@ Requests:
 
 from flask import Flask
 from flask import request
+from flask_wtf.csrf import CSRFProtect
 
 app = Flask(__name__)
+csrf = CSRFProtect()
+csrf.init_app(app) 
 
 ## Allows for both HEAD and GET requests. 
 @app.route("/")
 def home():
     print("GET")
     return "Hello, World!"
-    
-@app.route("/salvador")
-def salvador():
-    return "Hello, Salvador"
 
 ## Safe way 
 '''
 The exact checks make this possible. With a HEAD request, the server just errors. 
 This is because nothing is returned. 
 '''
-@app.route("/login-safe", methods=["GET", "POST"])
+@app.route("/unsafe", methods=["GET", "POST"])
 def log_in_safe():
 
     if(request.method == "POST"):
@@ -43,16 +42,16 @@ Allows for a head request because the GET is included.
 If the GET is removed, then the HEAD is not allowed. 
 This is vulnerable to an implicit method assumption issue. 
 '''
-@app.route("/login-unsafe", methods=["GET", "POST"])
-def log_in_unsafe():
+@app.route("/unsafe", methods=['GET', 'HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE', 'PATCH', "??"])
+def unsafe():
 
     if(request.method == "GET"):
         print("GET LOGIN")
         return "GET LOGIN"
         # Attempt the login & do something else
     else:
-        print("POST LOGIN")
-        return "POST LOGIN" 
+        print("POST")
+        return "POST" 
 
 if __name__ == "__main__":
     app.run(debug=True)

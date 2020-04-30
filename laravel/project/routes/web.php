@@ -19,7 +19,6 @@ Route::post('/', function () {
     error_log('POST');
     return "POST";
 });
-
 Route::put('/', function () {
     error_log('PUT');
     return "PUT";
@@ -34,16 +33,18 @@ Route::delete('/', function () {
 });
 
 // This route is vulnerable to the request presumption here. According to some docs, people actually use this functionality. 
-Route::any('/any', function () {
+Route::any('/unsafe', function () {
     error_log(Request::method());
     if(Request::method() == "GET"){
-        error_log("GET...."); 
+        error_log("GET"); 
+        return "GET";
     }
 
     // Use for a POST request (in theory) 
-    // The HEAD request bypasses the check used above. 
     else{
         error_log("Other request!"); 
+        return "Other";
     }
+
 }); 
 

@@ -15,6 +15,8 @@ class firstView(View):
     def post(self, request):
         print ("POST....")
         return HttpResponse('Post!') 
+    
+    # This will map HEAD to GET, unless the HEAD method is specified.
     def get(self, request):
         print ("GET...." )
         return HttpResponse('GET!') 
@@ -54,7 +56,7 @@ This example does not work with a head request if the http_methods are set to ju
 The method decorator is quite strict on this. 
 '''
 #@require_http_methods(["GET", "POST"])
-@method_decorator(csrf_exempt, name='dispatch')
+#@method_decorator(csrf_exempt, name='dispatch')
 def index(request): 
     if(request.method == 'GET'):
         print("do GET stuff")

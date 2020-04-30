@@ -9,14 +9,9 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-// Works for both HEAD and GET
-app.get('/', (req, res) =>{
-    console.log('GET')
-    res.send('Get!');
-});
-
-app.all('/vuln', function (req, res, next) {
+app.all('/unsafe', function (req, res, next) {
     if(req.method == "GET"){
+        console.log("GET request!")
         // Do xyz
     }
 
@@ -29,6 +24,11 @@ app.all('/vuln', function (req, res, next) {
     res.send('All!')
 });
 
+// Works for both HEAD and GET
+app.get('/', (req, res) =>{
+    console.log('GET')
+    res.send('Get!');
+});
 
 // If only the post request, then ONLY post is allowed. 
 app.post('/', (req, res) =>{
