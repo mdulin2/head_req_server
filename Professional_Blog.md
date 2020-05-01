@@ -4,7 +4,7 @@
 
 Some security issues are quite obvious and easy to find based upon very simple patterns. However, there are others that lie deep below the surface, stemming from developers not understanding the technology they were using.
 
-Today, I wanted to share another item to add to the tool belt. This bug comes from two main insights: developers can programmatically route requests based upon request methods and some backend servers automatically map *HEAD* requests to *GET* requests. The next few sections will dive into *how* these features can be used bypass security mechanisms. Finally, we will see which backend web frameworks are potentially vulnerable to this type of attack. This post was inspired by a Github vulnerability that was discovered via this very technique [3].
+This bug comes from two main insights: developers can programmatically route requests based and some backend servers automatically map *HEAD* requests to *GET* requests. The next few sections will dive into *how* these features can be used bypass security mechanisms. Finally, we will see which backend web frameworks are potentially vulnerable to this type of attack. This post was inspired by a Github vulnerability that was discovered via this very technique [3].
 
 ## Request Types 
 
@@ -28,20 +28,20 @@ An interesting case of *request mapping*, is the *HEAD* request. In recent histo
 Many developers write logic based upon the **method** of request that is sent. This was the question that I asked myself: *"Would it be possible to abuse this obscure logic to bypass security features?"* If developers do not know about this feature of their service then they might write logic that is vulnerable to some type of security bypass. 
 
 This is the test plan I went with for the research to discover where this could potentially be exploited at:
-- Test all HTTP verbs being sent to a service to see what happens. Use following verbs for each test configuration: 
+- Test all HTTP verbs being sent to a service. Use following verbs for each test configuration: 
     - GET, POST, PUT, PATCH, DELETE, CONNECT, OPTIONS, HEAD, TRACE, ?? (invalid)
 - Test a plethora of backend web frameworks. The following frameworks were tested:
     -  Django, Flask, Ruby on Rails, Springboot, Laravel, Express and ASP.net. 
 
-NOTE: With all of these services, test them in the different ways that a web server can be setup. For testing, this included non-standard setups that are still available within the framework. 
+NOTE: Backend web servers tend to have multiple different configurations. For testing, we included non-standard setups that are still available within the framework. 
 
 ## Impact
 
-What does this bug actually mean for security? I thought that clarifying this before reading the application specific bugs would be useful. The most common attack vector is *bypassing CSRF token* checks. Cross-Site Request Forgery (CSRF) is an attack that forces a user to make unintended state changing actions on a website upon viewing a different website. In order to prevent this attack, random tokens are added to state-changing requests; these are called *CSRF Tokens**. Most web frameworks automatically check for CSRF tokens on all requests that change state (POST, PUT, PATCH, DELETE, etc.). For more information on CSRF, please refer to [4]. 
+What does this bug actually mean for security? The most common attack vector is *bypassing CSRF token* checks. Cross-Site Request Forgery (CSRF) is an attack that forces a user to make unintended state changing actions on a website upon viewing a separate website. In order to prevent this attack, random tokens are added to state-changing requests; these are called *CSRF Tokens*. Most web frameworks automatically check for CSRF tokens on all requests that change state (POST, PUT, PATCH, DELETE, etc.). For more information on CSRF, please refer to [4]. 
 
-If the **logic** for a POST request (or any state changing method) can be triggered on an endpoint, without actually making a POST request, this would bypass the CSRF token check while making the state changing request. This is a direct compromise in the security of the application, as it defeats the CSRF protection of that API. The following example, in Flask, that demonstrates this vulnerability: 
+If the **logic** for a POST request (or any state changing method) can be triggered on an endpoint, without actually making a POST request, this would bypass the CSRF token check while making the state changing request. This is a direct compromise in the security of the application, as it defeats the CSRF protection of that API. The following example, in Flask, demonstrates this vulnerability: 
 
-<----Picture/Code---->
+```
 @app.route("/unsafe", methods=["GET", "POST"])
 def log_in_unsafe():
 
@@ -51,25 +51,26 @@ def log_in_unsafe():
     else:
         print("POST")
         return "POST" 
-<-------------------->
+```
 
 In the code shown above, a GET request would hit one code path, while POST (or anything else) would hit another. The key insight is that (in Flask), HEAD requests are automatically mapped to GET requests. Because of this, a HEAD request would hit the POST part of the endpoint! This is because the request assumes that if the request is a GET or a POST, and does not take into consideration that a HEAD request could hit this endpoint. Most importantly, it should be noted that a HEAD request would not trigger a CSRF token check. So, a cross-site HEAD request on this API would be able to hit the state changing actions, bypassing the necessary CSRF token check entirely.
 
 ## Findings 
 
-The likelihood  of a configuration being exploited can be broken down into two categories: Directly Mapped APIs and All Requests. 
+The likelihood of a configuration being exploited can be broken down into two categories: *Directly Mapped APIs* and *Accept All Methods*. 
 
 ### Directly Mapped 
 
 Several frameworks allow for multiple request methods to map to the same endpoint. In this situation, it is very common for functionality to be chosen based upon the request method. 
 
-When the developer can specify which request methods are allowed on an endpoint and this is not exactly followed, it can lead to logic bugs. Flask, Springboot and some configurations of Ruby on Rails were found to be vulnerable to this attack if configured improperly. An example of a vulnerable configuration can be seen in the Flask example shown above. This configuration is the most likely to be vulnerably, as developers assume that the request checks are safe. 
+When the developer can specify which request methods are allowed on an endpoint and this is not exactly followed, it can lead to logic bugs. Flask, Springboot and some configurations of Ruby on Rails were found to be vulnerable to this attack. An example of a vulnerable configuration can be seen in the Flask example shown above. This configuration is the most likely to be vulnerably, as developers assume that the request checks are safe. 
 
 ### Accept All Methods 
 
 Several frameworks have an endpoint that will accept all HTTP methods. For some frameworks, this is the only way that the framework actually works. 
 
 When developers create logic, based upon these request methods, mistakes can be made that lead to logic bugs. A developer could write code similar to the following: 
+
 ```
 def index(request): 
     if(request.method == 'GET'):
@@ -81,20 +82,21 @@ def index(request):
     return HttpResponse(str(request.method))
 ```
 
-In the above Django example, the developer is assuming that only a GET request can hit this endpoint **and** bypass the CSRF check. By making a non-GET request that bypasses the CSRF check, this can trigger an unintended function call. What is considered a *safe* request? According to RFC 7231 [3], GET, HEAD, OPTIONS and TRACE are *safe* requests that do not require CSRF tokens validation. The results section has a *table* showing the results of each request method for each framework and how it handles CSRF token checks. 
+In the above Django example, the developer is assuming that only a GET request can hit this endpoint **and** bypass the CSRF check. The developer is assuming that all other requests would then need to be verified by CSRF tokens. By making a non-GET request that bypasses the CSRF check, this can trigger an unintended code path. What is considered a *safe* request? According to RFC 7231 [3], GET, HEAD, OPTIONS and TRACE are *safe* requests that do not require CSRF tokens validation. The results section has a *table* showing the results of each request method for each framework and how it handles CSRF token checks. 
 
 It should be noted that this situation does not rely on HEAD requests being mapped to GET. However, it does rely on the fact that HEAD requests do not get checked for CSRF tokens. 
 
 ## Results Tables 
 
 The following table shows the findings from the research: 
+
 ```
 Frameworks tab inside of `TableOfMappings.xlsx`
 Framework -- Directly Mapped -- Accept All Endpoints -- Map Head to GET
 --------------
 ```
 
-None of these result in a vulnerability directly. However, the logic of the routing, built into the framework, can result in a vulnerability.  
+This does not result in a vulnerability directly. However, the logic of the routing can result in a vulnerability.  
 It should be noted that this table is not exhaustive. Several of the frameworks support multiple ways to do routing. This table just shows a yes/no result for whether the frameworks have this functionality, in any capacity. For more into this, please visit the in-depth report/notes at [5].
 
 The following table demonstrates which request methods do not validate CSRF tokens for each framework:
